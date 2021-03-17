@@ -1,0 +1,35 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class TurretController : MonoBehaviour
+{
+    public Rigidbody2D targetPos;
+    public Rigidbody2D selfPos;
+    public GameObject bullet;
+    public Transform firePoint;
+    private void Start() {
+       
+    }
+    private void FixedUpdate() {
+        Vector2 shootDir = targetPos.position - selfPos.position;
+        float angle = Mathf.Atan2(shootDir.y,shootDir.x) * Mathf.Rad2Deg;
+        selfPos.rotation = angle;
+    }
+    void BulletFire() {   
+        Instantiate(bullet, firePoint.position, Quaternion.identity);
+    }
+    private void OnTriggerEnter2D(Collider2D other) {
+        if (other.tag == "Target") {
+            InvokeRepeating("BulletFire",0f,0.7f);
+            Debug.Log("fire!");
+        }
+
+    }
+    private void OnTriggerExit2D(Collider2D other) {
+        if (other.name == "Target") {
+            CancelInvoke("BulletFire");
+            Debug.Log("stop Fire");
+        }
+    }
+}
