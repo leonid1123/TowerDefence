@@ -12,27 +12,36 @@ public class TurretController : MonoBehaviour
     private bool LockOn = false;
 
     public List<Rigidbody2D> targets;
+    public List<int> targetsID;
+    //public Dictionary<int, Rigidbody2D> allTargets = new Dictionary<int, Rigidbody2D>();
     private void Start() {
        targets = new List<Rigidbody2D>();
+       targetsID = new List<int>();
     }
     private void Update() {
         if (targets.Count>0 && !LockOn) {
-
-            targetPos = targets.ElementAt(0);
             LockOn = true;
             InvokeRepeating("BulletFire",0.1f,0.7f);
         } else if (targets.Count==0) {
             CancelInvoke("BulletFire");
             LockOn = false;
-        }
-        
+        } 
     }
     private void FixedUpdate() {
-        if (targetPos!=null){
-            Vector2 shootDir = targetPos.position - selfPos.position;
+        if (targets.Count>0){
+            targetPos = targets.ElementAt(0);
+            Vector2 shootDir = targets[0].position - selfPos.position;
             float angle = Mathf.Atan2(shootDir.y,shootDir.x) * Mathf.Rad2Deg;
             selfPos.rotation = angle;
-        }  
+        } 
+        if (targets.Count>0) { 
+            bool toDelete = targetPos.GetComponent<TargetController>().dead;
+            if (toDelete) {
+                int pos = targetPos.GetComponent<TargetController>().myID;
+                targetsID.RemoveAt(pos);
+                targets.RemoveAt(pos); 
+            }
+        }
     }
     void BulletFire() {   
         
@@ -41,33 +50,16 @@ public class TurretController : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D other) {
         if (other.tag == "Target") {
             targets.Add(GameObject.Find(other.name).GetComponent<Rigidbody2D>());
+            targetsID.Add(GameObject.Find(other.name).GetInstanceID());
         }
-        /*
-        if (other.tag == "Target" && !LockOn) {
-            LockOn = true;
-            other.tag = "CurrentTarget";
-            InvokeRepeating("BulletFire",0.1f,0.7f);
-            Debug.Log("fire!");
-            targetPos = GameObject.Find(other.name).GetComponent<Rigidbody2D>();
-        }
-        */
 
     }
     private void OnTriggerExit2D(Collider2D other) {
         if (other.tag == "Target") {
-            targets.RemoveAt(0);
+            int exitID = GameObject.Find(other.name).GetInstanceID();
+            int pos = targetsID.IndexOf(exitID);
+            targetsID.RemoveAt(pos);
+            targets.RemoveAt(pos);            
         }
-        
-        /*if (other.name == "Target") {
-            CancelInvoke("BulletFire");
-            Debug.Log("stop Fire");
-        }*/
-        /*
-        if (other.tag == "CurrentTarget") {
-            other.tag = "Target";
-            CancelInvoke("BulletFire");
-            LockOn = false;
-        } */
     }
-
 }

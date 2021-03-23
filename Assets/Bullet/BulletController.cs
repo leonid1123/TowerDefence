@@ -16,14 +16,15 @@ public class BulletController : MonoBehaviour
     }
     void FixedUpdate()
     {
-        Vector2 shootDir = targetPos.position - selfPos.position;
+        Vector2 shootDir = targetPos.position - selfPos.position; 
         float angle = Mathf.Atan2(shootDir.y,shootDir.x) * Mathf.Rad2Deg-90f;
         selfPos.rotation = angle;
-        selfPos.AddForce(shootDir.normalized*800*Time.fixedDeltaTime);
+        selfPos.velocity = shootDir.normalized*10;
     }
     private void OnTriggerEnter2D(Collider2D other) {
         if(other.tag=="Target") {
-            //target.hp--;
+            target = GameObject.Find(other.name).GetComponent<TargetController>();
+            target.hp--;
             Destroy(gameObject);
         }
     }
