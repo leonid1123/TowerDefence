@@ -28,6 +28,7 @@ public class TurretController : MonoBehaviour
         } 
     }
     private void FixedUpdate() {
+
         if (targets.Count>0){
             targetPos = targets.ElementAt(0);
             Vector2 shootDir = targets[0].position - selfPos.position;

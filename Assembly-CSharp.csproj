@@ -39,6 +39,7 @@
      <Compile Include="Assets\Target\TargetController.cs" />
      <Compile Include="Assets\Turret\TurretController.cs" />
      <Compile Include="Assets\Bullet\BulletController.cs" />
+     <Compile Include="Assets\TargetSpawner\TargetSpawnController.cs" />
     <Reference Include="UnityEngine">
         <HintPath>C:/Program Files/Unity/Hub/Editor/2020.3.1f1/Editor/Data/Managed/UnityEngine/UnityEngine.dll</HintPath>
     </Reference>

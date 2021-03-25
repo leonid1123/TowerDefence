@@ -13,7 +13,12 @@ public class TargetController : MonoBehaviour
     public bool dead = false;
     void Start()
     {
-        
+        int i = 0;
+        Transform pts = GameObject.Find("WayPoints").transform; 
+        foreach(Transform child in pts) {
+            points[i] = child.GetComponent<Rigidbody2D>();
+            i++;
+        } 
     }
     void Update()
     {

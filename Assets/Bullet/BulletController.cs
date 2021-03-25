@@ -16,10 +16,14 @@ public class BulletController : MonoBehaviour
     }
     void FixedUpdate()
     {
+        if (targetPos!=null) {
         Vector2 shootDir = targetPos.position - selfPos.position; 
         float angle = Mathf.Atan2(shootDir.y,shootDir.x) * Mathf.Rad2Deg-90f;
         selfPos.rotation = angle;
         selfPos.velocity = shootDir.normalized*10;
+        } else {
+            Destroy(gameObject);
+        }
     }
     private void OnTriggerEnter2D(Collider2D other) {
         if(other.tag=="Target") {
