@@ -5,6 +5,7 @@ using UnityEngine;
 public class Bullet : MonoBehaviour
 {
     private Transform target;
+    private float speed = 40f;
 
     public void Seek(Transform _target)
     {
@@ -13,7 +14,9 @@ public class Bullet : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        var dir = (target.position - transform.position).normalized;
+        gameObject.GetComponent<Rigidbody>().velocity = dir*speed;
+
     }
 
     // Update is called once per frame
@@ -22,6 +25,7 @@ public class Bullet : MonoBehaviour
         if (target == null)
         {
             Destroy(gameObject);
+            return;
         }
     }
 }
