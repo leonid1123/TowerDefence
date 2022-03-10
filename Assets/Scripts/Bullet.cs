@@ -6,7 +6,8 @@ public class Bullet : MonoBehaviour
 {
     private Transform target;
     private float speed = 40f;
-
+    public GameObject boom;
+         
     public void Seek(Transform _target)
     {
         target = _target;
@@ -15,7 +16,7 @@ public class Bullet : MonoBehaviour
     void Start()
     {
         var dir = (target.position - transform.position).normalized;
-        gameObject.GetComponent<Rigidbody>().velocity = dir*speed;
+        gameObject.GetComponent<Rigidbody>().velocity = dir * speed;
 
     }
 
@@ -26,6 +27,14 @@ public class Bullet : MonoBehaviour
         {
             Destroy(gameObject);
             return;
+        }
+    }
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.tag == "enemy")
+        {
+            Instantiate(boom,transform.position,transform.rotation);
+            Destroy(gameObject);
         }
     }
 }

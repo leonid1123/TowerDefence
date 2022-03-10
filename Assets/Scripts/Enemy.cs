@@ -31,4 +31,11 @@ public class Enemy : MonoBehaviour
         wayPointIndex++;
         target = Waypoints.waypoints[wayPointIndex];
     }
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.tag =="bullet" )
+        {
+            Destroy (gameObject);
+        }
+    }
 }
