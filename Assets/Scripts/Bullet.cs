@@ -31,9 +31,10 @@ public class Bullet : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
+        GameObject boomObj = (GameObject)Instantiate(boom,transform.position,transform.rotation);
+        Destroy(boomObj,2f);
         if (other.tag == "enemy")
         {
-            Instantiate(boom,transform.position,transform.rotation);
             Destroy(gameObject);
         }
     }

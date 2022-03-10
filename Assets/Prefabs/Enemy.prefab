@@ -98,6 +98,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 10
+  enemyBoomObj: {fileID: 8425260152390584420, guid: b0d32b2a76c2c8c4388e2c3767816308, type: 3}
 --- !u!135 &195989933243228820
 SphereCollider:
   m_ObjectHideFlags: 0
