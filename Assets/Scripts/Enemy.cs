@@ -24,7 +24,7 @@ public class Enemy : MonoBehaviour
         {
             transform.localScale = Vector3.one;
         }
-        if (hp == 0)
+        if (hp <= 0)
         {
             Destroy(gameObject);
         }
