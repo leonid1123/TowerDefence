@@ -33,9 +33,10 @@ public class Bullet : MonoBehaviour
     {
         GameObject boomObj = (GameObject)Instantiate(boom,transform.position,transform.rotation);
         Destroy(boomObj,2f);
-        if (other.tag == "enemy")
+        if (other.tag == "Enemy")
         {
             Destroy(gameObject);
+            return;
         }
     }
 }
